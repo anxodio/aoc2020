@@ -1,9 +1,14 @@
 from pathlib import Path
 from typing import List
+import itertools
 
 
-def expense_report(expenses: List[int]):
-    return 514579
+def expense_report(expenses: List[int]) -> int:
+    TARGET_SUM = 2020
+    for expense1, expense2 in itertools.combinations(expenses, 2):
+        if (expense1 + expense2) == TARGET_SUM:
+            return expense1 * expense2
+    raise Exception("Not found D:")
 
 
 def test_expense_report():
