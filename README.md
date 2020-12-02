@@ -49,4 +49,6 @@ python test_day1/test_ex1.py
 
 ## Acknowledgements
 
-Thanks to @franmosteiro 🙌 (I just copied his great README)
+Thanks to [@adriennetacke](https://github.com/adriennetacke) 🙌 (I just copied her great [README](https://github.com/adriennetacke/advent-of-code-2020/))
+
+And eskerrik asko to [@franmosteiro](https://github.com/franmosteiro) , as I discovered Adrienne's README in his repository 😜
