@@ -28,6 +28,6 @@ def test_expense_report_v2():
 
 
 if __name__ == "__main__":
-    with open((Path(__file__).parent / "input1.txt")) as f:
+    with open((Path(__file__).parent / "input.txt")) as f:
         expenses = [int(line) for line in f.readlines()]
     print(expense_report_v2(expenses))
