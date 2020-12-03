@@ -1,7 +1,6 @@
 from pathlib import Path
 from typing import List
 from dataclasses import dataclass
-from collections import Counter
 
 
 # Ultra coupled :D
