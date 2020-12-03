@@ -9,7 +9,7 @@ class TreeRow(UserList):
         return self.data[key % len(self.data)]
 
 
-TreeMap = list[TreeRow]
+TreeMap = List[TreeRow]
 
 
 def slope_tree_count(treemap: TreeMap) -> int:
