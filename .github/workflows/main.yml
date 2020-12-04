@@ -30,6 +30,9 @@ jobs:
       - name: Lint with black
         run: |
           black --check .
+      - name: Check types with mypy
+        run: |
+          mypy test_day*
       - name: Test with pytest
         run: |
           pytest

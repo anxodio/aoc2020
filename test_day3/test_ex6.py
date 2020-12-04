@@ -1,11 +1,11 @@
 from pathlib import Path
-from typing import List
+from typing import List, Any
 from collections import UserList
 from itertools import count
 
 
 class TreeRow(UserList):
-    def __getitem__(self, key: int) -> str:
+    def __getitem__(self, key: Any) -> Any:
         return self.data[key % len(self.data)]
 
 

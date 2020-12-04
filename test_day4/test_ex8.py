@@ -6,13 +6,13 @@ import re
 Passport = Dict[str, str]
 
 
-def build_passport_from_lines(lines: List[str]) -> Passport:
+def build_passport_from_lines(lines: Iterable[str]) -> Passport:
     keyvalues = " ".join(lines).split(" ")
-    return dict(((keyvalue.split(":")) for keyvalue in keyvalues))
+    return dict(((keyvalue.split(":")) for keyvalue in keyvalues))  # type: ignore
 
 
 def separate_passport_lines(raw_lines: List[str]) -> Iterable[List[str]]:
-    lines = []
+    lines: List[str] = []
     for raw_line in raw_lines:
         if raw_line == "":
             yield lines
@@ -22,7 +22,7 @@ def separate_passport_lines(raw_lines: List[str]) -> Iterable[List[str]]:
     yield lines
 
 
-def count_valid_passports(passports: List[Passport]) -> int:
+def count_valid_passports(passports: Iterable[Passport]) -> int:
     return sum(1 for passport in passports if is_valid_passport(passport))
 
 
