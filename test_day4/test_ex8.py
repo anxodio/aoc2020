@@ -48,6 +48,16 @@ def _expiration_year_is_valid(year: int) -> bool:
     return 2020 <= year <= 2030
 
 
+def _height_is_valid(height: str) -> bool:
+    number, metric = int(height[0:-2]), height[-2:]
+    if metric == "cm":
+        return 150 <= number <= 193
+    elif metric == "in":
+        return 59 <= number <= 76
+    else:
+        return False
+
+
 def test_has_all_mandatory_fields():
     assert (
         _has_all_mandatory_fields(
@@ -93,6 +103,13 @@ def test_issue_year_is_valid():
 def test_expiration_year_is_valid():
     assert _expiration_year_is_valid(2022) is True
     assert _expiration_year_is_valid(3000) is False
+
+
+def test_height_is_valid():
+    assert _height_is_valid("60in") is True
+    assert _height_is_valid("190cm") is True
+    assert _height_is_valid("190in") is False
+    assert _height_is_valid("190") is False
 
 
 # def test_count_valid_passports():
