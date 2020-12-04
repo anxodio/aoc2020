@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Dict, List, Iterable
 from dataclasses import dataclass
+import re
 
 
 Passport = Dict[str, str]
@@ -58,6 +59,15 @@ def _height_is_valid(height: str) -> bool:
         return False
 
 
+def _hair_color_is_valid(hair_color: str) -> bool:
+    return bool(re.match(r"#[a-fA-F0-9]{6}$", hair_color))
+
+
+def _eye_color_is_valid(eye_color: str) -> bool:
+    VALID_EYE_COLORS = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
+    return eye_color in VALID_EYE_COLORS
+
+
 def test_has_all_mandatory_fields():
     assert (
         _has_all_mandatory_fields(
@@ -110,6 +120,17 @@ def test_height_is_valid():
     assert _height_is_valid("190cm") is True
     assert _height_is_valid("190in") is False
     assert _height_is_valid("190") is False
+
+
+def test_hair_color_is_valid():
+    assert _hair_color_is_valid("#123abc") is True
+    assert _hair_color_is_valid("#123abz") is False
+    assert _hair_color_is_valid("123abc") is False
+
+
+def test_eye_color_is_valid():
+    assert _eye_color_is_valid("brn") is True
+    assert _eye_color_is_valid("wat") is False
 
 
 # def test_count_valid_passports():
