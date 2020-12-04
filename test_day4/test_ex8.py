@@ -1,6 +1,5 @@
 from pathlib import Path
 from typing import Dict, List, Iterable
-from dataclasses import dataclass
 import re
 
 
