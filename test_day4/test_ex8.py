@@ -28,7 +28,16 @@ def count_valid_passports(passports: List[Passport]) -> int:
 
 
 def is_valid_passport(passport: Passport) -> bool:
-    return _has_all_mandatory_fields(passport)
+    return (
+        _has_all_mandatory_fields(passport)
+        and _birth_year_is_valid(int(passport["byr"]))
+        and _issue_year_is_valid(int(passport["iyr"]))
+        and _expiration_year_is_valid(int(passport["eyr"]))
+        and _height_is_valid(passport["hgt"])
+        and _hair_color_is_valid(passport["hcl"])
+        and _eye_color_is_valid(passport["ecl"])
+        and _pid_is_valid(passport["pid"])
+    )
 
 
 def _has_all_mandatory_fields(passport: Passport) -> bool:
@@ -50,7 +59,11 @@ def _expiration_year_is_valid(year: int) -> bool:
 
 
 def _height_is_valid(height: str) -> bool:
-    number, metric = int(height[0:-2]), height[-2:]
+    try:
+        number, metric = int(height[0:-2]), height[-2:]
+    except Exception:
+        return False
+
     if metric == "cm":
         return 150 <= number <= 193
     elif metric == "in":
@@ -66,6 +79,10 @@ def _hair_color_is_valid(hair_color: str) -> bool:
 def _eye_color_is_valid(eye_color: str) -> bool:
     VALID_EYE_COLORS = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
     return eye_color in VALID_EYE_COLORS
+
+
+def _pid_is_valid(pid: str) -> bool:
+    return bool(re.match(r"[0-9]{9}$", pid))
 
 
 def test_has_all_mandatory_fields():
@@ -120,6 +137,7 @@ def test_height_is_valid():
     assert _height_is_valid("190cm") is True
     assert _height_is_valid("190in") is False
     assert _height_is_valid("190") is False
+    assert _height_is_valid("1") is False
 
 
 def test_hair_color_is_valid():
@@ -133,33 +151,38 @@ def test_eye_color_is_valid():
     assert _eye_color_is_valid("wat") is False
 
 
-# def test_count_valid_passports():
-#     assert (
-#         count_valid_passports(
-#             [
-#                 {
-#                     "ecl": "gry",
-#                     "pid": "860033327",
-#                     "eyr": "2020",
-#                     "hcl": "#fffffd",
-#                     "byr": "1937",
-#                     "iyr": "2017",
-#                     "cid": "147",
-#                     "hgt": "183cm",
-#                 },
-#                 {
-#                     "iyr": "2013",
-#                     "ecl": "amb",
-#                     "cid": "350",
-#                     "eyr": "2023",
-#                     "pid": "028048884",
-#                     "hcl": "#cfa07d",
-#                     "byr": "1929",
-#                 },
-#             ]
-#         )
-#         == 1
-#     )
+def test_pid_is_valid():
+    assert _pid_is_valid("000000001") is True
+    assert _pid_is_valid("0123456789") is False
+
+
+def test_count_valid_passports():
+    assert (
+        count_valid_passports(
+            [
+                {
+                    "iyr": "2019",
+                    "hcl": "#602927",
+                    "eyr": "1967",
+                    "hgt": "170cm",
+                    "ecl": "grn",
+                    "pid": "012533040",
+                    "byr": "1946",
+                },
+                {
+                    "eyr": "2029",
+                    "ecl": "blu",
+                    "cid": "129",
+                    "byr": "1989",
+                    "iyr": "2014",
+                    "pid": "896056539",
+                    "hcl": "#a97842",
+                    "hgt": "165cm",
+                },
+            ]
+        )
+        == 1
+    )
 
 
 def test_build_passport_from_lines():
