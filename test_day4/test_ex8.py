@@ -36,36 +36,63 @@ def _has_all_mandatory_fields(passport: Passport) -> bool:
     return MANDATORY_FIELDS.issubset(passport.keys())
 
 
-# def test_is_valid_passport():
-#     assert (
-#         is_valid_passport(
-#             {
-#                 "ecl": "gry",
-#                 "pid": "860033327",
-#                 "eyr": "2020",
-#                 "hcl": "#fffffd",
-#                 "byr": "1937",
-#                 "iyr": "2017",
-#                 "cid": "147",
-#                 "hgt": "183cm",
-#             }
-#         )
-#         is True
-#     )
-#     assert (
-#         is_valid_passport(
-#             {
-#                 "iyr": "2013",
-#                 "ecl": "amb",
-#                 "cid": "350",
-#                 "eyr": "2023",
-#                 "pid": "028048884",
-#                 "hcl": "#cfa07d",
-#                 "byr": "1929",
-#             }
-#         )
-#         is False
-#     )
+def _birth_year_is_valid(year: int) -> bool:
+    return 1920 <= year <= 2002
+
+
+def _issue_year_is_valid(year: int) -> bool:
+    return 2010 <= year <= 2020
+
+
+def _expiration_year_is_valid(year: int) -> bool:
+    return 2020 <= year <= 2030
+
+
+def test_has_all_mandatory_fields():
+    assert (
+        _has_all_mandatory_fields(
+            {
+                "ecl": "gry",
+                "pid": "860033327",
+                "eyr": "2020",
+                "hcl": "#fffffd",
+                "byr": "1937",
+                "iyr": "2017",
+                "cid": "147",
+                "hgt": "183cm",
+            }
+        )
+        is True
+    )
+    assert (
+        _has_all_mandatory_fields(
+            {
+                "iyr": "2013",
+                "ecl": "amb",
+                "cid": "350",
+                "eyr": "2023",
+                "pid": "028048884",
+                "hcl": "#cfa07d",
+                "byr": "1929",
+            }
+        )
+        is False
+    )
+
+
+def test_birth_year_is_valid():
+    assert _birth_year_is_valid(2002) is True
+    assert _birth_year_is_valid(2003) is False
+
+
+def test_issue_year_is_valid():
+    assert _issue_year_is_valid(2010) is True
+    assert _issue_year_is_valid(2009) is False
+
+
+def test_expiration_year_is_valid():
+    assert _expiration_year_is_valid(2022) is True
+    assert _expiration_year_is_valid(3000) is False
 
 
 # def test_count_valid_passports():
