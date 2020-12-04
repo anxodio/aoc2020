@@ -27,70 +27,74 @@ def count_valid_passports(passports: List[Passport]) -> int:
 
 
 def is_valid_passport(passport: Passport) -> bool:
+    return _has_all_mandatory_fields(passport)
+
+
+def _has_all_mandatory_fields(passport: Passport) -> bool:
     # cid is removed from mandatory fields 😈
     MANDATORY_FIELDS = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}
     return MANDATORY_FIELDS.issubset(passport.keys())
 
 
-def test_is_valid_passport():
-    assert (
-        is_valid_passport(
-            {
-                "ecl": "gry",
-                "pid": "860033327",
-                "eyr": "2020",
-                "hcl": "#fffffd",
-                "byr": "1937",
-                "iyr": "2017",
-                "cid": "147",
-                "hgt": "183cm",
-            }
-        )
-        is True
-    )
-    assert (
-        is_valid_passport(
-            {
-                "iyr": "2013",
-                "ecl": "amb",
-                "cid": "350",
-                "eyr": "2023",
-                "pid": "028048884",
-                "hcl": "#cfa07d",
-                "byr": "1929",
-            }
-        )
-        is False
-    )
+# def test_is_valid_passport():
+#     assert (
+#         is_valid_passport(
+#             {
+#                 "ecl": "gry",
+#                 "pid": "860033327",
+#                 "eyr": "2020",
+#                 "hcl": "#fffffd",
+#                 "byr": "1937",
+#                 "iyr": "2017",
+#                 "cid": "147",
+#                 "hgt": "183cm",
+#             }
+#         )
+#         is True
+#     )
+#     assert (
+#         is_valid_passport(
+#             {
+#                 "iyr": "2013",
+#                 "ecl": "amb",
+#                 "cid": "350",
+#                 "eyr": "2023",
+#                 "pid": "028048884",
+#                 "hcl": "#cfa07d",
+#                 "byr": "1929",
+#             }
+#         )
+#         is False
+#     )
 
 
-def test_count_valid_passports():
-    assert (
-        count_valid_passports(
-            [
-                {
-                    "ecl": "gry",
-                    "pid": "860033327",
-                    "eyr": "2020",
-                    "hcl": "#fffffd",
-                    "byr": "1937",
-                    "iyr": "2017",
-                    "cid": "147",
-                    "hgt": "183cm",
-                },
-                {
-                    "iyr": "2013",
-                    "ecl": "amb",
-                    "cid": "350",
-                    "eyr": "2023",
-                    "pid": "028048884",
-                    "hcl": "#cfa07d",
-                    "byr": "1929",
-                },
-            ]
-        )
-        == 1
-    )
+# def test_count_valid_passports():
+#     assert (
+#         count_valid_passports(
+#             [
+#                 {
+#                     "ecl": "gry",
+#                     "pid": "860033327",
+#                     "eyr": "2020",
+#                     "hcl": "#fffffd",
+#                     "byr": "1937",
+#                     "iyr": "2017",
+#                     "cid": "147",
+#                     "hgt": "183cm",
+#                 },
+#                 {
+#                     "iyr": "2013",
+#                     "ecl": "amb",
+#                     "cid": "350",
+#                     "eyr": "2023",
+#                     "pid": "028048884",
+#                     "hcl": "#cfa07d",
+#                     "byr": "1929",
+#                 },
+#             ]
+#         )
+#         == 1
+#     )
 
 
 def test_build_passport_from_lines():
