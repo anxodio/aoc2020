@@ -1,5 +1,6 @@
 from pathlib import Path
 from typing import Dict, List, Iterable, Generator
+from itertools import takewhile
 
 
 Passport = Dict[str, str]
@@ -11,14 +12,9 @@ def build_passport_from_lines(lines: Iterable[str]) -> Passport:
 
 
 def separate_passport_lines(raw_lines: List[str]) -> Generator[List[str], None, None]:
-    lines: List[str] = []
-    for raw_line in raw_lines:
-        if raw_line == "":
-            yield lines
-            lines = []
-        else:
-            lines.append(raw_line)
-    yield lines
+    raw_lines_iterator = iter(raw_lines)
+    while (lines := list(takewhile(lambda line: line != "", raw_lines_iterator))) :
+        yield lines
 
 
 def count_valid_passports(passports: Iterable[Passport]) -> int:
