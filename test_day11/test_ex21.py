@@ -41,7 +41,7 @@ class SeatLayout:
             ]
         )
 
-    def _get_seat_next_state(self, row_index, col_index) -> str:
+    def _get_seat_next_state(self, row_index: int, col_index: int) -> str:
         seat = self._rows[row_index][col_index]
         neighbours = self._count_neighbours(row_index, col_index)
         if seat == self.EMPTY and neighbours[self.OCCUPIED] == 0:
@@ -50,7 +50,7 @@ class SeatLayout:
             return self.EMPTY
         return seat
 
-    def _count_neighbours(self, row_index, col_index) -> Counter:
+    def _count_neighbours(self, row_index: int, col_index: int) -> Counter:
         counter: Counter = Counter()
         for row in self._rows[
             max(row_index - 1, 0) : min(row_index + 2, len(self._rows))
