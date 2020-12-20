@@ -28,9 +28,7 @@ def build_rules_from_lines(lines: List[str]) -> Rules:
     rules: Rules = {}
     for line in lines:
         raw_index, raw_rule = line.split(": ")
-        if raw_rule[0] == '"':
-            raw_rule = raw_rule[1:-1]
-        rules[int(raw_index)] = raw_rule
+        rules[int(raw_index)] = raw_rule.replace('"', "")
     return rules
 
 
